@@ -1,0 +1,45 @@
+1.) Open a file in VIM : vi <filename>
+2.) Enter input mode : press i
+3.) save and close : :wq
+4.) don't save and close : :q!
+5.) in base mode use shift + v to select a line
+6.) y is to copy
+7.) p is to paste
+8.) u is undo
+9.) to check for zombie process use the <ps> command
+
+
+Valgrind Notes:
+1.) test for memory leaks: valgrind --leak-check=yes <program executable> might need to pass in the arguments as well
+
+GDB Notes:
+1.) q is quit
+2.) list will display your code
+3.) step will step to the next line of code and goes in functions aka if you call a smaller function in main it will go into that small function then keep going
+4.) next will go to next line but not go into functions aka if you call a smaller function in main it will just run and get to next line
+5.) b <line number> will set a breakpoint at this line of code
+6.) Make sure you include the -g tag when you compile
+7.) bt is back trace it will then tell you where the error is
+8.) print <variable> will show you the variable
+9.) can also print arrays and print array[x]
+
+General C Syntax Notes:
+1.) If you want to print anything with printf
+you need to pass in a string first specifying what it is going to be so "%d" means i am going to print an integer
+2.) need to define functions based off what they return
+3.) need to define what types of paramters you are passing in when you pass into a helper function from a main function (inside the helper function, not when using it in the main function).
+4.) & is the pointer symbol when you do scanf you need to use the pointer to assign that value to the variable you want to use.
+
+
+Gerneral Linux Notes:
+1.) Go back one level in the directory: cd
+2.) Go back to the home level directory: cd /
+3.) Copy a file from a.c to b.c in the current directory: cp <old file name> <new file name>
+4.) Check if the word main appreas in the file a.c and b.c: NEED TO FIND THIS ONE
+5.) LS (showing more information): ls -l gives us file sizes and date modified
+6.) LS showing all files: ls -a shows all files even temps
+7.) To have Linux show all files and or directorys that start with a letter: Example, changing directory, do cd / <tab> <tab again> <next letter> <tab again> <tab once more>
+8.) How to have a manual for functions and commands show up: man -a <function or command you need>
+9.) compile : cc - o <name you want the output to be> <name of c file>
+10.) If we want to use gdb to debug we need to use gcc -o outname -g input file
+11.) Make sure you clear out the executables before submitting the folder to mimir

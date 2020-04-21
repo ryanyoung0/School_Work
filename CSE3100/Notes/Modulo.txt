@@ -1,0 +1,4 @@
+Using modulo to check if a value is inside a range:
+x % y will yield x as long as y is bigger than x, if x is bigger than y aka it is outside the range then it will return the remainder
+of x divided by y
+Can also be used to check if a number is odd or even.
