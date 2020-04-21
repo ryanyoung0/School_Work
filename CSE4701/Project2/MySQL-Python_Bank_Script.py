@@ -140,21 +140,25 @@ def Withdraw(connection):
             # asking teller how much to withdraw and doing it
             withdraw_amount = int(input("Please enter withdraw amount: "))
             new_balance = result['balance'] - withdraw_amount
-            sql = "update account set balance = %d where account_no = %s;" \
-                  % (new_balance, account_no)
-            cursor.execute(sql)
-            sql = "select * from account where account.account_no = %s;" \
-                  % (account_no)
-            cursor.execute(sql)
-            result = cursor.fetchone()
-            print("-----New Account Balance-----")
-            print("Account Number:", result['account_no'])
-            print("Account Name:", result['name_on_account'])
-            print("Account Balance:", result['balance'])
-            print("Account Opening Date:",
-                  result['account_open_date'])
-            print("--------------------------")
-            connection.commit()
+            if withdraw_amount > result['balance']:
+                print("Insufficient Funds")
+                connection.commit()
+            else:
+                sql = "update account set balance = %d where account_no = %s;" \
+                      % (new_balance, account_no)
+                cursor.execute(sql)
+                sql = "select * from account where account.account_no = %s;" \
+                      % (account_no)
+                cursor.execute(sql)
+                result = cursor.fetchone()
+                print("-----New Account Balance-----")
+                print("Account Number:", result['account_no'])
+                print("Account Name:", result['name_on_account'])
+                print("Account Balance:", result['balance'])
+                print("Account Opening Date:",
+                      result['account_open_date'])
+                print("--------------------------")
+                connection.commit()
 
 
 def Transfer(connection):
@@ -202,40 +206,45 @@ def Transfer(connection):
             connection.commit()
         # Withdrawing from source account
         transfer_amount = int(input("Please enter transfer amount amount: "))
-        Withdraw_balance = source_balance - transfer_amount
-        with connection.cursor() as cursor:
-            sql = "update account set balance = %d where account_no = %s;" \
-                  % (Withdraw_balance, source_account_no)
-            cursor.execute(sql)
-            sql = "select * from account where account.account_no = %s;" \
-                  % (source_account_no)
-            cursor.execute(sql)
-            result = cursor.fetchone()
-            print("-----New Account Balance-----")
-            print("Account Number:", result['account_no'])
-            print("Account Name:", result['name_on_account'])
-            print("Account Balance:", result['balance'])
-            print("Account Opening Date:",
-                  result['account_open_date'])
-            print("--------------------------")
-            #time.sleep(100)
-        # Depositing into target account
-            Deposit_balance = transfer_amount + target_balance
-            sql = "update account set balance = %d where account_no = %s;" \
-                  % (Deposit_balance, target_account_no)
-            cursor.execute(sql)
-            sql = "select * from account where account.account_no = %s;" \
-                  % (target_account_no)
-            cursor.execute(sql)
-            result = cursor.fetchone()
-            print("-----New Account Balance-----")
-            print("Account Number:", result['account_no'])
-            print("Account Name:", result['name_on_account'])
-            print("Account Balance:", result['balance'])
-            print("Account Opening Date:",
-                  result['account_open_date'])
-            print("--------------------------")
-        connection.commit()
+        if transfer_amount > source_balance:
+            print("Insufficnet Funds!")
+            connection.commit()
+        else:
+            Withdraw_balance = source_balance - transfer_amount
+            with connection.cursor() as cursor:
+                sql = "update account set balance = %d where account_no = %s;" \
+                      % (Withdraw_balance, source_account_no)
+                cursor.execute(sql)
+                sql = "select * from account where account.account_no = %s;" \
+                      % (source_account_no)
+                cursor.execute(sql)
+                result = cursor.fetchone()
+                print("-----New Account Balance-----")
+                print("Account Number:", result['account_no'])
+                print("Account Name:", result['name_on_account'])
+                print("Account Balance:", result['balance'])
+                print("Account Opening Date:",
+                      result['account_open_date'])
+                print("--------------------------")
+                #time.sleep(100)
+            # Depositing into target account
+                Deposit_balance = transfer_amount + target_balance
+                sql = "update account set balance = %d where account_no = %s;" \
+                      % (Deposit_balance, target_account_no)
+                cursor.execute(sql)
+                sql = "select * from account where account.account_no = %s;" \
+                      % (target_account_no)
+                cursor.execute(sql)
+                result = cursor.fetchone()
+                print("-----New Account Balance-----")
+                print("Account Number:", result['account_no'])
+                print("Account Name:", result['name_on_account'])
+                print("Account Balance:", result['balance'])
+                print("Account Opening Date:",
+                      result['account_open_date'])
+                print("--------------------------")
+            connection.commit()
+
 
 
 def main():
